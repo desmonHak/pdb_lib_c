@@ -1,4 +1,4 @@
-/* pdb_downloader.c - Librería para extraer y descargar PDBs de archivos PE */
+/* pdb_downloader.c - Libreria para extraer y descargar PDBs de archivos PE */
 
 #include "pdb_lib_c.h"
 
@@ -16,10 +16,10 @@ static void GetLastErrorAsString(DWORD errorCode, char* buffer, size_t size) {
         NULL);
 
     if (len == 0) {
-        // Mensaje genérico
+        // Mensaje generico
         printf(buffer, size, TEXT("Error desconocido %lu"), errorCode);
     } else {
-        // Remover salto de línea al final si existe
+        // Remover salto de linea al final si existe
         while (len > 0 && (buffer[len-1] == L'\n' || buffer[len-1] == L'\r')) {
             buffer[len-1] = L'\0';
             len--;
@@ -112,12 +112,12 @@ BOOL GetPdbInfoFromImage(const char* path, GUID* outGuid, DWORD* outAge, char* o
     IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)(base + dos->e_lfanew);
 
     if (dos->e_magic != IMAGE_DOS_SIGNATURE) {
-        DEBUG_PRINT("Firma DOS inválida: 0x%X", dos->e_magic);
+        DEBUG_PRINT("Firma DOS invalida: 0x%X", dos->e_magic);
         goto cleanup;
     }
 
     if (nt->Signature != IMAGE_NT_SIGNATURE) {
-        DEBUG_PRINT("Firma NT inválida: 0x%X", nt->Signature);
+        DEBUG_PRINT("Firma NT invalida: 0x%X", nt->Signature);
         goto cleanup;
     }
 
@@ -144,7 +144,7 @@ BOOL GetPdbInfoFromImage(const char* path, GUID* outGuid, DWORD* outAge, char* o
     }
 
     if (!debugOffset) {
-        DEBUG_PRINT("No se pudo determinar offset físico de debug");
+        DEBUG_PRINT("No se pudo determinar offset fisico de debug");
         goto cleanup;
     }
 
@@ -162,7 +162,7 @@ BOOL GetPdbInfoFromImage(const char* path, GUID* outGuid, DWORD* outAge, char* o
     DEBUG_PRINT("cv->Signature: 0x%X", cv->Signature);
 
     if (cv->Signature != RSDS_SIGNATURE) {
-        DEBUG_PRINT("Firma RSDS inválida");
+        DEBUG_PRINT("Firma RSDS invalida");
         goto cleanup;
     }
 
@@ -206,7 +206,7 @@ void SymbolList_Add(SymbolList* list, const char* name, DWORD64 addr) {
         size_t newCapacity = (list->capacity == 0) ? 64 : list->capacity * 2;
         SymbolInfo* newItems = realloc(list->items, newCapacity * sizeof(SymbolInfo));
         if (!newItems) {
-            fprintf(stderr, "Error: sin memoria al aumentar lista de símbolos.\n");
+            fprintf(stderr, "Error: sin memoria al aumentar lista de simbolos.\n");
             exit(EXIT_FAILURE);
         }
         list->items = newItems;
@@ -215,7 +215,7 @@ void SymbolList_Add(SymbolList* list, const char* name, DWORD64 addr) {
 
     char* nameCopy = _strdup(name); // strdup segura en MSVC
     if (!nameCopy) {
-        fprintf(stderr, "Error: sin memoria al duplicar nombre de símbolo.\n");
+        fprintf(stderr, "Error: sin memoria al duplicar nombre de simbolo.\n");
         exit(EXIT_FAILURE);
     }
 
